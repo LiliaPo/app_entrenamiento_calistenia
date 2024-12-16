@@ -14,6 +14,56 @@
             <a href="/entrenamientos.html" class="nav-link">Entrenamientos</a>
             <a href="/dietas.html" class="nav-link">Dieta</a>
             <a href="/nutricion.html" class="nav-link">Nutrición Deportiva</a>
+            <div class="user-profile">
+                <img src="/images/default-avatar.png" alt="Mi Perfil" class="avatar" id="userAvatar" title="Mi Perfil">
+                <div class="user-menu" id="userMenu">
+                    <div class="menu-header">
+                        <h3>Mi Perfil</h3>
+                        <button class="settings-btn">⚙️</button>
+                    </div>
+                    <form id="userProfileForm" class="profile-form">
+                        <div class="form-field">
+                            <label for="userName">Nombre</label>
+                            <input type="text" id="userName" placeholder="Tu nombre">
+                        </div>
+                        <div class="form-field">
+                            <label for="userEmail">Email</label>
+                            <input type="email" id="userEmail" placeholder="tu@email.com">
+                        </div>
+                        <div class="form-field">
+                            <label for="userPhone">Teléfono</label>
+                            <input type="tel" id="userPhone" placeholder="123456789">
+                        </div>
+                        <div class="form-field">
+                            <label>Avatar</label>
+                            <div class="avatar-selection">
+                                <img src="/images/avatar1.png" class="avatar-option" data-avatar="avatar1">
+                                <img src="/images/avatar2.png" class="avatar-option" data-avatar="avatar2">
+                                <img src="/images/avatar3.png" class="avatar-option" data-avatar="avatar3">
+                                <img src="/images/avatar4.png" class="avatar-option" data-avatar="avatar4">
+                            </div>
+                        </div>
+                        <div class="metrics-section">
+                            <h4>Métricas Corporales</h4>
+                            <div class="metrics-grid">
+                                <div class="metric-field">
+                                    <label for="userHeight">Altura</label>
+                                    <input type="number" id="userHeight" placeholder="165">
+                                </div>
+                                <div class="metric-field">
+                                    <label for="userWeight">Peso</label>
+                                    <input type="number" id="userWeight" placeholder="60">
+                                </div>
+                                <div class="metric-field">
+                                    <label for="userAge">Edad</label>
+                                    <input type="number" id="userAge" placeholder="25">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="save-profile-btn">Guardar Perfil</button>
+                    </form>
+                </div>
+            </div>
         </nav>
     </div>
     <div class="container">
@@ -42,6 +92,7 @@
             <h3>Calendario de Entrenamiento</h3>
             <div id="calendar" class="calendar"></div>
         </div>
+        <div id="rutina-resultado" class="resultado"></div>
         <div class="progress-tracker">
             <h3>Seguimiento de Progreso</h3>
             <div class="input-group">
@@ -74,12 +125,12 @@
                 </div>
             </div>
         </div>
-        <div id="rutina-resultado" class="resultado"></div>
     </div>
     <script src="/js/script.js"></script>
     <script src="/js/calendar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/js/progress-tracker.js"></script>
+    <script src="/js/user-profile.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const calendar = new Calendar(document.getElementById('calendar'));
