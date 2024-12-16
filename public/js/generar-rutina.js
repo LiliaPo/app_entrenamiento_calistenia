@@ -105,15 +105,37 @@ Por favor, responde estas preguntas y te ayudaré a crear una rutina personaliza
 
     function extractTrainingDays(rutina) {
         const days = new Set();
-        const dayMatches = rutina.match(/Día \d+/g);
-        if (dayMatches) {
-            dayMatches.forEach(match => {
-                const day = parseInt(match.replace('Día ', ''));
-                if (!isNaN(day)) {
-                    days.add(day);
-                }
-            });
+        const today = new Date();
+        const currentDay = today.getDate();
+        const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+        
+        // Extraer los días mencionados en la rutina
+        const dayMatches = rutina.match(/Día \d+|Lunes|Martes|Miércoles|Jueves|Viernes|Sábado|Domingo/gi);
+        if (!dayMatches) return days;
+
+        // Limitar a máximo 3-4 días de entrenamiento
+        const totalWorkoutDays = Math.min(dayMatches.length, 4);
+        
+        // Distribuir los entrenamientos a lo largo de la semana
+        let nextWorkoutDay = currentDay;
+
+        for (let i = 0; i < totalWorkoutDays; i++) {
+            // Si es el primer día y es menor o igual al día actual, empezar mañana
+            if (i === 0 && nextWorkoutDay <= currentDay) {
+                nextWorkoutDay = currentDay + 1;
+            }
+            
+            // Añadir el día al conjunto
+            if (nextWorkoutDay > daysInMonth) {
+                nextWorkoutDay = 1; // Reiniciar al principio del mes siguiente
+            }
+            
+            days.add(nextWorkoutDay);
+            
+            // Añadir 2 días para asegurar un día de descanso entre entrenamientos
+            nextWorkoutDay += 2;
         }
+
         return days;
     }
 }); 

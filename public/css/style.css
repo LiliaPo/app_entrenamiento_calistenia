@@ -681,3 +681,186 @@ body.rutina-page {
 .calendar-day.other-month {
     opacity: 0.3;
 }
+
+/* Fondos específicos para diferentes páginas */
+/* Fondo específico para la página de dietas */
+body.dietas-page {
+    background-image: url('../images/dietas.jpg');
+}
+
+/* Fondo específico para la página de nutrición */
+body.nutricion-page {
+    background-image: url('../images/nutricion_deportista.jpg');
+}
+
+/* Fondo específico para la página de tipo de entrenamiento */
+body.tipo-entrenamiento-page {
+    background-color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (max-width: 1200px) {
+    body.tipo-entrenamiento-page {
+        background-size: 60% auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body.tipo-entrenamiento-page {
+        background-size: 70% auto;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body.tipo-entrenamiento-page {
+        background-size: 95% auto;
+    }
+}
+
+/* Estilos para el seguimiento de progreso */
+.progress-tracker {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.progress-tracker h3 {
+    font-size: 1.1em;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.input-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.measure-input {
+    flex: 1;
+    min-width: 150px;
+    margin-bottom: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+.measure-input label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.measure-input input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: border-color 0.3s;
+}
+
+.measure-input input:focus {
+    outline: none;
+    border-color: #333;
+}
+
+.save-button {
+    height: fit-content;
+    padding: 0.8rem 1.5rem;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: flex-end;
+    margin-bottom: 1rem;
+    min-width: 150px;
+}
+
+.save-button:hover {
+    background-color: #555;
+}
+
+.progress-chart-container {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    height: 400px;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+}
+
+.imc-container {
+    padding: 1rem;
+    text-align: center;
+}
+
+.imc-container h4 {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.imc-gauge {
+    position: relative;
+    margin: 2rem auto;
+    width: 100%;
+    max-width: 500px;
+}
+
+.imc-ranges {
+    display: flex;
+    height: 30px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.imc-ranges .range {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.9em;
+    font-weight: 500;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
+}
+
+.range.bajo-peso { background: #3498db; }
+.range.normal { background: #2ecc71; }
+.range.sobrepeso { background: #f1c40f; }
+.range.obesidad { background: #e74c3c; }
+
+.imc-marker {
+    position: absolute;
+    top: -25px;
+    transform: translateX(-50%);
+    transition: left 0.3s ease;
+}
+
+.marker-value {
+    background: #2c3e50;
+    color: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.marker-arrow {
+    color: #2c3e50;
+    font-size: 1.2em;
+    line-height: 1;
+}

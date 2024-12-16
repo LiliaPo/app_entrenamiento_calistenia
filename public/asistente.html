@@ -42,10 +42,44 @@
             <h3>Calendario de Entrenamiento</h3>
             <div id="calendar" class="calendar"></div>
         </div>
+        <div class="progress-tracker">
+            <h3>Seguimiento de Progreso</h3>
+            <div class="input-group">
+                <div class="measure-input">
+                    <label for="weight">Peso (kg)</label>
+                    <input type="number" id="weight" step="0.1" placeholder="Ej: 65.5">
+                </div>
+                <div class="measure-input">
+                    <label for="height">Altura (cm)</label>
+                    <input type="number" id="height" step="1" placeholder="Ej: 165">
+                </div>
+                <button id="save-progress" class="save-button">Guardar Medidas</button>
+            </div>
+            <div class="progress-chart-container">
+                <canvas id="weightChart"></canvas>
+                <div class="imc-container">
+                    <h4>Índice de Masa Corporal (IMC)</h4>
+                    <div class="imc-gauge">
+                        <div class="imc-ranges">
+                            <span class="range bajo-peso">Bajo</span>
+                            <span class="range normal">Normal</span>
+                            <span class="range sobrepeso">Sobrepeso</span>
+                            <span class="range obesidad">Obesidad</span>
+                        </div>
+                        <div class="imc-marker" id="imcMarker">
+                            <div class="marker-value">--</div>
+                            <div class="marker-arrow">▼</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="rutina-resultado" class="resultado"></div>
     </div>
     <script src="/js/script.js"></script>
     <script src="/js/calendar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/progress-tracker.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const calendar = new Calendar(document.getElementById('calendar'));

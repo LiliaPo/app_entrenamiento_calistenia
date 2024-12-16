@@ -1,52 +1,54 @@
 document.addEventListener('DOMContentLoaded', () => {
     const generarRutinaBtn = document.getElementById('generar-rutina');
-    const rutinaResultado = document.getElementById('rutina-resultado');
-    const calendar = new Calendar(document.getElementById('calendar'));
+    if (generarRutinaBtn) {  // Solo ejecutar si estamos en la página del asistente
+        const rutinaResultado = document.getElementById('rutina-resultado');
+        const calendar = new Calendar(document.getElementById('calendar'));
 
-    generarRutinaBtn.addEventListener('click', async () => {
-        const objetivo = document.getElementById('objetivo').value;
-        const nivel = document.getElementById('nivel').value;
+        generarRutinaBtn.addEventListener('click', async () => {
+            const objetivo = document.getElementById('objetivo').value;
+            const nivel = document.getElementById('nivel').value;
 
-        try {
-            const response = await fetch('/generate-routine', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    tipo: objetivo,
-                    lugar: 'gimnasio', // o podríamos añadir un selector para esto
-                    mensaje: `Usuario de nivel ${nivel} buscando rutina de ${objetivo}`
-                }),
-            });
+            try {
+                const response = await fetch('/generate-routine', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        tipo: objetivo,
+                        lugar: 'gimnasio', // o podríamos añadir un selector para esto
+                        mensaje: `Usuario de nivel ${nivel} buscando rutina de ${objetivo}`
+                    }),
+                });
 
-            if (!response.ok) {
-                throw new Error('Error al generar la rutina');
+                if (!response.ok) {
+                    throw new Error('Error al generar la rutina');
+                }
+
+                const data = await response.json();
+                
+                // Formatear la rutina para mejor legibilidad
+                const rutinaFormateada = data.rutina
+                    .replace(/Día \d+:/g, '\n\n$&\n')
+                    .replace(/(?:Ejercicios|Series|Repeticiones|Descanso):/g, '\n$&\n')
+                    .trim();
+
+                rutinaResultado.innerHTML = `
+                    <div class="bloque">
+                        ${rutinaFormateada}
+                    </div>
+                `;
+
+                // Extraer los días de entrenamiento y actualizar el calendario
+                const trainingDays = extractTrainingDays(data.rutina);
+                calendar.setTrainingDays(trainingDays);
+
+            } catch (error) {
+                console.error('Error:', error);
+                rutinaResultado.innerHTML = '<p>Lo siento, hubo un error al generar la rutina. Por favor, intenta de nuevo.</p>';
             }
-
-            const data = await response.json();
-            
-            // Formatear la rutina para mejor legibilidad
-            const rutinaFormateada = data.rutina
-                .replace(/Día \d+:/g, '\n\n$&\n')
-                .replace(/(?:Ejercicios|Series|Repeticiones|Descanso):/g, '\n$&\n')
-                .trim();
-
-            rutinaResultado.innerHTML = `
-                <div class="bloque">
-                    ${rutinaFormateada}
-                </div>
-            `;
-
-            // Extraer los días de entrenamiento y actualizar el calendario
-            const trainingDays = extractTrainingDays(data.rutina);
-            calendar.setTrainingDays(trainingDays);
-
-        } catch (error) {
-            console.error('Error:', error);
-            rutinaResultado.innerHTML = '<p>Lo siento, hubo un error al generar la rutina. Por favor, intenta de nuevo.</p>';
-        }
-    });
+        });
+    }
 
     function extractTrainingDays(rutina) {
         const days = new Set();
