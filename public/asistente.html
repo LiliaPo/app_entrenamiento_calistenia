@@ -17,7 +17,7 @@
         </nav>
     </div>
     <div class="container">
-        <h2>Asistente de Entrenamiento</h2>
+        <h2>Asistente Personal</h2>
         <div class="input-section">
             <div class="form-group">
                 <label for="objetivo">Selecciona tu objetivo:</label>
@@ -38,8 +38,18 @@
             
             <button id="generar-rutina">Generar Rutina</button>
         </div>
+        <div class="calendar-container">
+            <h3>Calendario de Entrenamiento</h3>
+            <div id="calendar" class="calendar"></div>
+        </div>
         <div id="rutina-resultado" class="resultado"></div>
     </div>
     <script src="/js/script.js"></script>
+    <script src="/js/calendar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const calendar = new Calendar(document.getElementById('calendar'));
+        });
+    </script>
 </body>
 </html>

@@ -82,6 +82,10 @@ Por favor, responde estas preguntas y te ayudaré a crear una rutina personaliza
             const data = await response.json();
             addMessage('assistant', data.rutina);
 
+            // Extraer los días de entrenamiento de la rutina
+            const trainingDays = extractTrainingDays(data.rutina);
+            calendar.setTrainingDays(trainingDays);
+
         } catch (error) {
             console.error('Error:', error);
             addMessage('assistant', 'Lo siento, hubo un error al procesar tu mensaje. Por favor, intenta de nuevo.');
@@ -96,4 +100,20 @@ Por favor, responde estas preguntas y te ayudaré a crear una rutina personaliza
             handleSendMessage();
         }
     });
+
+    const calendar = new Calendar(document.getElementById('calendar'));
+
+    function extractTrainingDays(rutina) {
+        const days = new Set();
+        const dayMatches = rutina.match(/Día \d+/g);
+        if (dayMatches) {
+            dayMatches.forEach(match => {
+                const day = parseInt(match.replace('Día ', ''));
+                if (!isNaN(day)) {
+                    days.add(day);
+                }
+            });
+        }
+        return days;
+    }
 }); 

@@ -46,42 +46,29 @@ app.post('/generate-routine', async (req, res) => {
   try {
     const { tipo, lugar, mensaje } = req.body;
     
-    // Verificar si el mensaje contiene datos personales (edad, género, etc.)
-    const containsPersonalData = mensaje.toLowerCase().includes('años') || 
-                               mensaje.toLowerCase().includes('mujer') || 
-                               mensaje.toLowerCase().includes('hombre');
-    
     const response = await axios.post(GROQ_API_URL, {
       model: "mixtral-8x7b-32768",
       messages: [
         {
           role: "system",
-          content: containsPersonalData ? 
-            `Eres un entrenador personal experto. El usuario ha proporcionado sus datos personales.
-            Genera una rutina de ejercicios específica y detallada que incluya:
-            - Rutina semanal completa
-            - Ejercicios específicos para ${tipo}
-            - Series y repeticiones
-            - Tiempos de descanso
-            - Duración de cada sesión
-            - Recomendaciones específicas para su nivel
-            La rutina debe ser realizable en ${lugar} y adaptada a sus características personales.` :
-            "Eres un entrenador personal experto que recopila información inicial del usuario."
+          content: `Eres un entrenador personal experto. Genera una rutina de ejercicios detallada que incluya:
+          - Rutina semanal de 3-4 días con descansos entre días de entrenamiento
+          - Los entrenamientos deben estar distribuidos a lo largo de la semana (ejemplo: Lunes, Miércoles, Viernes)
+          - Ejercicios específicos para ${tipo}
+          - Series y repeticiones para cada ejercicio
+          - Tiempos de descanso entre series
+          - Duración aproximada de cada sesión
+          - Recomendaciones específicas para el nivel indicado
+          La rutina debe ser realizable en ${lugar}.
+          Formato requerido: 
+          Día 1 (Lunes): [ejercicios]
+          Día 2 (Miércoles): [ejercicios]
+          Día 3 (Viernes): [ejercicios]
+          Incluye recomendaciones de descanso entre sesiones.`
         },
         {
           role: "user",
-          content: containsPersonalData ?
-            `Datos del usuario: ${mensaje}
-            Tipo de entrenamiento: ${tipo}
-            Lugar: ${lugar}
-            Genera una rutina completa y detallada.` :
-            `¡Hola! Para ayudarte a crear una rutina de ${tipo} para realizar en ${lugar}, necesito conocer algunos detalles:
-            1. ¿Cuál es tu edad, género y nivel de actividad física actual?
-            2. ¿Tienes alguna lesión o condición médica que deba considerar?
-            3. ¿Cuánto tiempo puedes dedicar a entrenar cada semana?
-            4. ¿Hay algún tipo de ejercicio que prefieras o que desees evitar?
-            
-            Por favor, responde estas preguntas y te ayudaré a crear una rutina personalizada.`
+          content: mensaje
         }
       ]
     }, {
