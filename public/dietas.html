@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dietas - Calistenia para Mujeres</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="main-page dietas-page">
+    <div class="app-title">
+        <h1>Calistenia para Mujeres</h1>
+        <nav class="nav-buttons">
+            <a href="/asistente.html" class="nav-link">Panel de Control</a>
+            <a href="/entrenamientos.html" class="nav-link">Entrenamientos</a>
+            <a href="/dietas.html" class="nav-link active">Dieta</a>
+            <a href="/nutricion.html" class="nav-link">Nutrición Deportiva</a>
+        </nav>
+    </div>
+    <div class="container">
+        <h2>Asistente de Dietas</h2>
+        <div class="input-section">
+            <div class="form-group">
+                <label for="tipo-dieta">Selecciona el tipo de dieta:</label>
+                <select id="tipo-dieta">
+                    <option value="perdida-peso">Pérdida de Peso</option>
+                    <option value="cuerpo-esculpido">Cuerpo Esculpido</option>
+                    <option value="gluteos">Glúteos Perfectos</option>
+                    <option value="abdominales">Abdominales 6 Pack</option>
+                    <option value="aumento-muscular">Aumento Muscular</option>
+                    <option value="pesas">Levantamiento de Pesas</option>
+                    <option value="crossfit">Cross-Fit</option>
+                    <option value="completo">Cuerpo Completo</option>
+                    <option value="posparto">Recuperación Posparto</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="duracion">Duración del plan:</label>
+                <select id="duracion">
+                    <option value="1-semana">1 Semana</option>
+                    <option value="2-semanas">2 Semanas</option>
+                    <option value="4-semanas">4 Semanas</option>
+                    <option value="8-semanas">8 Semanas</option>
+                </select>
+            </div>
+            
+            <button id="generar-dieta">Generar Plan de Dieta</button>
+        </div>
+        <div id="dieta-resultado" class="resultado"></div>
+    </div>
+    <script src="/js/dietas.js"></script>
+</body>
+</html> 

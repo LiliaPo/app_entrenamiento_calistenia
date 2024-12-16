@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrición Deportiva - Calistenia para Mujeres</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="main-page nutricion-page">
+    <div class="app-title">
+        <h1>Calistenia para Mujeres</h1>
+        <nav class="nav-buttons">
+            <a href="/asistente.html" class="nav-link">Panel de Control</a>
+            <a href="/entrenamientos.html" class="nav-link">Entrenamientos</a>
+            <a href="/dietas.html" class="nav-link">Dieta</a>
+            <a href="/nutricion.html" class="nav-link active">Nutrición Deportiva</a>
+        </nav>
+    </div>
+    <div class="container">
+        <h2>Asistente de Nutrición Deportiva</h2>
+        <div class="input-section">
+            <div class="form-group">
+                <label for="tipo-nutricion">Selecciona el tipo de plan:</label>
+                <select id="tipo-nutricion">
+                    <option value="pre-entreno">Nutrición Pre-Entrenamiento</option>
+                    <option value="post-entreno">Nutrición Post-Entrenamiento</option>
+                    <option value="suplementacion">Plan de Suplementación</option>
+                    <option value="proteinas">Fuentes de Proteínas</option>
+                    <option value="carbohidratos">Gestión de Carbohidratos</option>
+                    <option value="grasas">Grasas Saludables</option>
+                    <option value="hidratacion">Plan de Hidratación</option>
+                    <option value="energia">Energía y Rendimiento</option>
+                    <option value="recuperacion">Nutrición para Recuperación</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="objetivo-nutricion">Objetivo principal:</label>
+                <select id="objetivo-nutricion">
+                    <option value="rendimiento">Mejorar Rendimiento</option>
+                    <option value="recuperacion">Optimizar Recuperación</option>
+                    <option value="masa-muscular">Ganar Masa Muscular</option>
+                    <option value="definicion">Definición Muscular</option>
+                    <option value="energia">Aumentar Energía</option>
+                </select>
+            </div>
+            
+            <button id="generar-nutricion">Generar Plan de Nutrición</button>
+        </div>
+        <div id="nutricion-resultado" class="resultado"></div>
+    </div>
+    <script src="/js/nutricion.js"></script>
+</body>
+</html> 
