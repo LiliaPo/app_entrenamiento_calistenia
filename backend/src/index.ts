@@ -4,43 +4,62 @@ import { fileURLToPath } from 'url';
 import * as dotenv from 'dotenv';
 import axios, { AxiosError } from 'axios';
 
-dotenv.config();
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Configurar dotenv para cargar desde la carpeta backend
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Servir archivos estáticos desde la carpeta 'public'
-app.use(express.static(path.join(__dirname, '../public')));
+// Configurar rutas para archivos estáticos
+app.use(express.static(path.join(__dirname, '../../frontend/public')));
+app.use('/images', express.static(path.join(__dirname, '../../frontend/public/images')));
+app.use('/css', express.static(path.join(__dirname, '../../frontend/public/css')));
+app.use('/js', express.static(path.join(__dirname, '../../frontend/public/js')));
 app.use(express.json());
 
-const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-
+// Rutas principales
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'));
+    res.sendFile(path.join(__dirname, '../../frontend/public/index.html'));
 });
 
-app.get('/asistente.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/asistente.html'));
+// Rutas de autenticación
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/public/login.html'));
 });
 
-app.get('/dietas.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/dietas.html'));
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/public/register.html'));
 });
 
-app.get('/nutricion.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/nutricion.html'));
+// Rutas de la aplicación
+app.get('/entrenamientos', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/public/entrenamientos.html'));
 });
 
-app.get('/tipo-entrenamiento.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/tipo-entrenamiento.html'));
+app.get('/tipo-entrenamiento', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/public/tipo-entrenamiento.html'));
 });
 
-app.get('/generar-rutina.html', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/generar-rutina.html'));
+app.get('/generar-rutina', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/public/generar-rutina.html'));
 });
+
+app.get('/dietas', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/public/dietas.html'));
+});
+
+app.get('/nutricion', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/public/nutricion.html'));
+});
+
+app.get('/asistente', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../frontend/public/asistente.html'));
+});
+
+const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 interface GroqResponse {
   choices: Array<{
@@ -66,7 +85,7 @@ IMPORTANTE: La rutina debe seguir EXACTAMENTE este formato para cada día:
 
 Día 1: [Grupo Muscular]
 - Calentamiento: [ejercicios de calentamiento]
-- [Nombre del ejercicio] ([series] x [repeticiones]) - Peso: [peso recomendado]
+- [Nombre del ejercicio] ([series] x [repeticiones]) - Peso: [peso en kg] kg ([peso en lbs] lbs)
 - Descanso entre series: [tiempo]
 [Notas sobre técnica]
 
@@ -78,7 +97,7 @@ Reglas estrictas:
 2. Los días DEBEN estar numerados del 1 al 6, sin repeticiones
 3. Cada día debe trabajar un grupo muscular diferente
 4. Incluir calentamiento específico para cada día
-5. Especificar peso recomendado para cada ejercicio
+5. Especificar peso recomendado PRIMERO en kg y luego en lbs entre paréntesis
 6. Incluir notas sobre técnica correcta
 7. Adaptar los ejercicios para realizarse en ${lugar}
 8. Enfocarse en el objetivo: ${tipo}

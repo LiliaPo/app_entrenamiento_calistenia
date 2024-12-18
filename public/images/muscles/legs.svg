@@ -1,7 +1,0 @@
-<svg viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
-    <!-- Importar silueta base -->
-    <use href="#body-outline"/>
-    <!-- Resaltar solo piernas -->
-    <path class="legs" d="M35,96 c-5,30 -5,60 5,90 M65,96 c5,30 5,60 -5,90" 
-          fill="#98dfb6" opacity="0.7"/>
-</svg> 

@@ -11,7 +11,7 @@ body {
 
 /* Solo aplica el fondo de la app a las páginas principales */
 body.main-page {
-    background-image: url('../images/app.webp');
+    background-image: url('/images/app.webp');
     background-size: 70% auto;
     background-position: center center;
     background-repeat: no-repeat;
@@ -315,13 +315,13 @@ h1 {
 
 /* Fondos específicos para cada tipo de entrenamiento */
 .entrenamiento-card[data-tipo="perdida-peso"] {
-    background-image: url('../images/perdida_peso.webp') !important;
+    background-image: url('/images/perdida_peso.webp') !important;
     background-size: cover !important;
     background-position: center !important;
 }
 
 .entrenamiento-card[data-tipo="cuerpo-esculpido"] {
-    background-image: url('../images/cuerpo_esculpido.avif') !important;
+    background-image: url('/images/cuerpo_esculpido.avif') !important;
     background-size: cover !important;
     background-position: center !important;
 }
@@ -356,17 +356,17 @@ h1 {
 
 /* Fondo específico para la página de dietas */
 body.dietas-page {
-    background-image: url('../images/dietas.jpg');
+    background-image: url('/images/dietas.jpg');
 }
 
 /* Fondo específico para la página de nutrición */
 body.nutricion-page {
-    background-image: url('../images/nutricion_deportista.jpg');
+    background-image: url('/images/nutricion_deportista.jpg');
 }
 
 /* Fondo específico para la página de generación de rutinas */
 body.rutina-page {
-    background-image: url('../images/app.webp');
+    background-image: url('/images/app.webp');
     background-size: 70% auto;
     background-position: center;
     background-repeat: no-repeat;
@@ -428,13 +428,13 @@ body.rutina-page {
 }
 
 .tipo-card[data-lugar="gimnasio"] {
-    background-image: url('../images/en_el_gimnasio.jpg');
+    background-image: url('/images/en_el_gimnasio.jpg');
     background-size: cover;
     background-position: center;
 }
 
 .tipo-card[data-lugar="casa"] {
-    background-image: url('../images/en_casa.jpg');
+    background-image: url('/images/en_casa.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -690,12 +690,12 @@ body.rutina-page {
 /* Fondos específicos para diferentes páginas */
 /* Fondo específico para la página de dietas */
 body.dietas-page {
-    background-image: url('../images/dietas.jpg');
+    background-image: url('/images/dietas.jpg');
 }
 
 /* Fondo específico para la página de nutrición */
 body.nutricion-page {
-    background-image: url('../images/nutricion_deportista.jpg');
+    background-image: url('/images/nutricion_deportista.jpg');
 }
 
 /* Fondo específico para la página de tipo de entrenamiento */
@@ -1249,4 +1249,179 @@ body.tipo-entrenamiento-page {
     font-size: 0.9em;
     color: #7f8c8d;
     margin-top: 0.5rem;
+}
+
+/* Estilos para los botones de autenticación */
+.auth-buttons {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.auth-button {
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-align: center;
+    min-width: 120px;
+}
+
+.login-button, .register-button {
+    background-color: #345845;
+    color: white;
+    border: none;
+    width: 100%;
+}
+
+.login-button:hover, .register-button:hover {
+    background-color: #2a4637;
+}
+
+/* Estilos para los enlaces secundarios de autenticación */
+.auth-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.auth-link {
+    color: #345845;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+    color: #2a4637;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .auth-links {
+        gap: 2rem;
+    }
+}
+
+/* Estilos para el formulario de autenticación */
+.auth-form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.form-group label {
+    text-align: left;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #345845;
+    box-shadow: 0 0 5px rgba(52, 88, 69, 0.2);
+}
+
+/* Ajustar el botón del formulario */
+.form-group button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #345845;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-group button:hover {
+    background-color: #2a4637;
+}
+
+/* Estilos para los requisitos de contraseña */
+.password-requirements {
+    margin-top: 0.3rem;
+    font-size: 0.75rem;
+    text-align: center;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.requirement {
+    margin: 0.1rem 0;
+    transition: color 0.3s ease;
+    color: #e74c3c;
+    text-align: left;
+}
+
+.requirement.valid {
+    color: #2ecc71;
+}
+
+/* Estilos para el icono de administrador */
+.admin-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.admin-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.admin-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.admin-link i {
+    font-size: 1.5rem;
+    color: #345845;
+}
+
+.admin-link:hover i {
+    color: #2a4637;
 }

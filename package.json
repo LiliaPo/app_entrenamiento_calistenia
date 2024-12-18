@@ -2,12 +2,18 @@
   "name": "asistente-entrenamiento",
   "version": "1.0.0",
   "description": "Asistente de entrenamiento conectado a Groq Cloud",
-  "main": "dist/index.js",
+  "main": "backend/dist/index.js",
   "type": "module",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
-    "start": "npm run build && node dist/index.js",
-    "build": "tsc",
-    "dev": "nodemon -r dotenv/config --exec \"node --experimental-specifier-resolution=node --loader ts-node/esm\" src/index.ts"
+    "start": "npm run build && node backend/dist/index.js",
+    "build": "tsc -p backend/tsconfig.json",
+    "dev": "tsx watch backend/src/index.ts",
+    "frontend:serve": "cd frontend && serve public",
+    "clean": "rimraf backend/dist",
+    "build:watch": "tsc -p backend/tsconfig.json -w"
   },
   "keywords": [
     "app",
@@ -17,16 +23,18 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.6.7",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
     "open": "^10.1.0"
   },
   "devDependencies": {
-    "@types/dotenv": "^6.1.1",
-    "@types/express": "^4.17.13",
-    "@types/node": "^16.0.0",
-    "nodemon": "^2.0.12",
-    "ts-node": "^10.9.1",
-    "typescript": "^4.3.5"
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.5",
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.0.2",
+    "rimraf": "^5.0.5",
+    "serve": "^14.2.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
   }
 }
