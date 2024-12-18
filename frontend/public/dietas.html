@@ -74,6 +74,10 @@
         const openChatBtn = document.getElementById('openChat');
         const chatPopup = document.getElementById('chatPopup');
         const closeChatBtn = document.getElementById('closeChat');
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const sendMessageBtn = document.getElementById('sendMessage');
+        let isFirstMessage = true;
 
         openChatBtn.addEventListener('click', () => {
             chatPopup.classList.add('active');
@@ -81,6 +85,62 @@
 
         closeChatBtn.addEventListener('click', () => {
             chatPopup.classList.remove('active');
+        });
+
+        // Función para añadir un mensaje al chat
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'assistant-message'}`;
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Manejar el envío de mensajes
+        async function handleSendMessage() {
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            // Añadir el mensaje del usuario al chat
+            addMessage(message, true);
+            userInput.value = '';
+
+            try {
+                // Enviar el mensaje al servidor
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        context: 'dietas',
+                        isFirstMessage: isFirstMessage
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error en la comunicación con el asistente');
+                }
+
+                const data = await response.json();
+                // Añadir la respuesta del asistente al chat
+                addMessage(data.response);
+                // Después del primer mensaje, cambiar el estado
+                isFirstMessage = false;
+            } catch (error) {
+                addMessage('Lo siento, ha ocurrido un error al procesar tu mensaje. Por favor, inténtalo de nuevo.');
+                console.error('Error:', error);
+            }
+        }
+
+        // Event listeners para enviar mensajes
+        sendMessageBtn.addEventListener('click', handleSendMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage();
+            }
         });
     </script>
 </body>

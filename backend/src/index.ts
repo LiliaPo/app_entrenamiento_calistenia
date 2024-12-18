@@ -308,6 +308,74 @@ app.post('/generate-nutrition', async (req, res) => {
   }
 });
 
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { message, context, isFirstMessage } = req.body;
+    
+    const response = await axios.post<GroqResponse>(GROQ_API_URL, {
+      model: "mixtral-8x7b-32768",
+      messages: [
+        {
+          role: "system",
+          content: isFirstMessage ? 
+            "Responde exactamente: ¡Hola! ¿En qué puedo ayudarte?" :
+            `Eres un asistente nutricional experto que crea planes de alimentación detallados.
+
+Cuando crees un plan de alimentación:
+- Incluye 7 días completos
+- Para cada día especifica: desayuno, comida, merienda y cena
+- Incluye cantidades y porciones
+- Adapta el plan según las necesidades del usuario
+- Mantén el formato consistente`
+        },
+        {
+          role: "user",
+          content: message
+        }
+      ],
+      temperature: 0.7,
+      max_tokens: 1000
+    }, {
+      headers: {
+        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    // Formatear la respuesta para mejor legibilidad
+    let respuesta = response.data.choices[0].message.content;
+    
+    // Eliminar texto introductorio si existe
+    respuesta = respuesta.replace(/^.*?(?=(?:Día|Lunes|Martes|Miércoles|Jueves|Viernes|Sábado|Domingo))/s, '').trim();
+    
+    // Formatear el texto
+    respuesta = respuesta
+      // Doble salto de línea antes de cada día
+      .replace(/(Día \d+:|Lunes:|Martes:|Miércoles:|Jueves:|Viernes:|Sábado:|Domingo:)/g, '\n\n$1')
+      // Salto de línea antes de cada comida
+      .replace(/(Desayuno:|Media mañana:|Comida:|Merienda:|Cena:)/g, '\n$1')
+      // Juntar líneas de la misma comida
+      .replace(/(?<=:.*)\n(?!\n|$|Día|Lunes|Martes|Miércoles|Jueves|Viernes|Sábado|Domingo|Desayuno|Media|Comida|Merienda|Cena)/g, ' ')
+      .trim();
+
+    res.json({ response: respuesta });
+  } catch (error) {
+    console.error('Error en el chat:', error);
+    if (axios.isAxiosError(error)) {
+      const axiosError = error as AxiosError;
+      res.status(500).json({ 
+        error: 'Error al procesar el mensaje',
+        detalles: axiosError.response?.data || axiosError.message
+      });
+    } else {
+      res.status(500).json({ 
+        error: 'Error al procesar el mensaje',
+        detalles: 'Error interno del servidor'
+      });
+    }
+  }
+});
+
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });
