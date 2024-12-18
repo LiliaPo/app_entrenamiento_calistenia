@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     const generarRutinaBtn = document.getElementById('generar-rutina');
-    if (generarRutinaBtn) {
-        const rutinaResultado = document.getElementById('rutina-resultado');
-        const calendar = new Calendar(document.getElementById('calendar'));
+    const rutinaResultado = document.getElementById('rutina-resultado');
+    const calendar = new Calendar(document.getElementById('calendar'));
 
+    if (generarRutinaBtn) {
         generarRutinaBtn.addEventListener('click', async () => {
             const objetivo = document.getElementById('objetivo').value;
             const nivel = document.getElementById('nivel').value;
@@ -28,8 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.detalles || 'Error al generar la rutina');
+                    throw new Error('Error al generar la rutina');
                 }
 
                 const data = await response.json();
@@ -69,9 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Error:', error);
                 rutinaResultado.innerHTML = `
                     <div class="error-message">
-                        <p>Lo siento, hubo un error al generar la rutina. Por favor, intenta de nuevo.</p>
+                        <p>Lo sentimos, hubo un error al generar la rutina.</p>
                         <p class="error-details">${error.message}</p>
-                    </div>`;
+                    </div>
+                `;
             } finally {
                 generarRutinaBtn.disabled = false;
             }
@@ -88,9 +88,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let nextWorkoutDay = currentDay;
 
         for (let i = 0; i < totalWorkoutDays; i++) {
+            if (i === 0 && nextWorkoutDay <= currentDay) {
+                nextWorkoutDay = currentDay + 1;
+            }
+            
             if (nextWorkoutDay > daysInMonth) {
                 nextWorkoutDay = 1;
             }
+            
             days.add(nextWorkoutDay);
             nextWorkoutDay += 2;
         }

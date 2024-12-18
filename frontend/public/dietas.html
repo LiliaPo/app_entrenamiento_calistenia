@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dietas - Calistenia para Mujeres</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="main-page dietas-page">
     <div class="app-title">
@@ -33,7 +34,7 @@
                     <option value="posparto">Recuperación Posparto</option>
                 </select>
             </div>
-            
+
             <div class="form-group">
                 <label for="duracion">Duración del plan:</label>
                 <select id="duracion">
@@ -43,11 +44,44 @@
                     <option value="8-semanas">8 Semanas</option>
                 </select>
             </div>
-            
+
             <button id="generar-dieta">Generar Plan de Dieta</button>
         </div>
         <div id="dieta-resultado" class="resultado"></div>
     </div>
-    <script src="/js/dietas.js"></script>
+
+    <!-- Botón flotante del asistente -->
+    <div class="assistant-button" id="openChat">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+
+    <!-- Ventana emergente del chat -->
+    <div class="chat-popup" id="chatPopup">
+        <div class="chat-header">
+            <h3>Asistente de Dietas</h3>
+            <button class="close-chat" id="closeChat">×</button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input-container">
+            <textarea id="userInput" placeholder="Escribe tu pregunta aquí..."></textarea>
+            <button id="sendMessage">Enviar</button>
+        </div>
+    </div>
+
+    <script src="/components/dietas.js"></script>
+    <script>
+        // Funcionalidad del chat emergente
+        const openChatBtn = document.getElementById('openChat');
+        const chatPopup = document.getElementById('chatPopup');
+        const closeChatBtn = document.getElementById('closeChat');
+
+        openChatBtn.addEventListener('click', () => {
+            chatPopup.classList.add('active');
+        });
+
+        closeChatBtn.addEventListener('click', () => {
+            chatPopup.classList.remove('active');
+        });
+    </script>
 </body>
 </html> 

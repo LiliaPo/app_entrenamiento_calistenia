@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generar Rutina - Calistenia para Mujeres</title>
     <link rel="stylesheet" href="/css/style.css">
-    <script src="/js/calendar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="main-page rutina-page">
     <div class="app-title">
@@ -28,11 +28,18 @@
                 <button id="send-message">Enviar</button>
             </div>
         </div>
+
         <div class="calendar-container">
             <h3>Calendario de Entrenamiento</h3>
-            <div id="calendar" class="calendar"></div>
+            <div class="calendar-header">
+                <button class="prev-month">&lt;</button>
+                <span class="calendar-month"></span>
+                <button class="next-month">&gt;</button>
+            </div>
+            <div class="calendar"></div>
         </div>
     </div>
-    <script src="/js/generar-rutina.js"></script>
+    <script src="/components/calendar.js"></script>
+    <script src="/components/generar-rutina.js"></script>
 </body>
 </html> 

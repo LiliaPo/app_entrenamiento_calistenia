@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutrición Deportiva - Calistenia para Mujeres</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="main-page nutricion-page">
     <div class="app-title">
@@ -33,7 +34,7 @@
                     <option value="recuperacion">Nutrición para Recuperación</option>
                 </select>
             </div>
-            
+
             <div class="form-group">
                 <label for="objetivo-nutricion">Objetivo principal:</label>
                 <select id="objetivo-nutricion">
@@ -44,11 +45,44 @@
                     <option value="energia">Aumentar Energía</option>
                 </select>
             </div>
-            
+
             <button id="generar-nutricion">Generar Plan de Nutrición</button>
         </div>
         <div id="nutricion-resultado" class="resultado"></div>
     </div>
-    <script src="/js/nutricion.js"></script>
+
+    <!-- Botón flotante del asistente -->
+    <div class="assistant-button" id="openChat">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+
+    <!-- Ventana emergente del chat -->
+    <div class="chat-popup" id="chatPopup">
+        <div class="chat-header">
+            <h3>Asistente de Nutrición</h3>
+            <button class="close-chat" id="closeChat">×</button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input-container">
+            <textarea id="userInput" placeholder="Escribe tu pregunta aquí..."></textarea>
+            <button id="sendMessage">Enviar</button>
+        </div>
+    </div>
+
+    <script src="/components/nutricion.js"></script>
+    <script>
+        // Funcionalidad del chat emergente
+        const openChatBtn = document.getElementById('openChat');
+        const chatPopup = document.getElementById('chatPopup');
+        const closeChatBtn = document.getElementById('closeChat');
+
+        openChatBtn.addEventListener('click', () => {
+            chatPopup.classList.add('active');
+        });
+
+        closeChatBtn.addEventListener('click', () => {
+            chatPopup.classList.remove('active');
+        });
+    </script>
 </body>
 </html> 

@@ -61,8 +61,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (isValid) {
-            // Aquí iría la lógica para enviar el formulario
-            console.log('Formulario válido, procediendo con el registro');
+            // Aquí iría la lógica de registro con el backend
+            console.log('Registro válido, procediendo con el registro');
+            
+            // Redirigir al usuario a la página del asistente
+            window.location.href = '/asistente';
         }
     });
 }); 

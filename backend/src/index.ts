@@ -18,6 +18,7 @@ app.use(express.static(path.join(__dirname, '../../frontend/public')));
 app.use('/images', express.static(path.join(__dirname, '../../frontend/public/images')));
 app.use('/css', express.static(path.join(__dirname, '../../frontend/public/css')));
 app.use('/js', express.static(path.join(__dirname, '../../frontend/public/js')));
+app.use('/components', express.static(path.join(__dirname, '../../frontend/components')));
 app.use(express.json());
 
 // Rutas principales
@@ -163,11 +164,41 @@ app.post('/generate-diet', async (req, res) => {
       messages: [
         {
           role: "system",
-          content: "Eres un nutricionista experto. Proporciona planes de dieta personalizados basados en los objetivos del usuario."
+          content: `Eres un nutricionista experto especializado en crear planes de alimentación personalizados.
+          
+          Instrucciones específicas:
+          - Crea un plan detallado para ${duracion}
+          - Incluye 5 comidas diarias: desayuno, media mañana, almuerzo, merienda y cena
+          - Especifica cantidades en gramos o porciones
+          - Adapta las comidas al objetivo: ${tipoDieta}
+          - Incluye alternativas para cada comida
+          - Añade consejos de preparación
+          
+          Formato de respuesta requerido:
+          Plan de Alimentación - [Objetivo]
+          Duración: [Duración]
+          
+          Día 1:
+          Desayuno:
+          - Opción 1: [alimentos y cantidades]
+          - Opción 2: [alternativa]
+          Consejos: [preparación o tips]
+          
+          Media Mañana:
+          [mismo formato]
+          
+          [Continuar con el resto de comidas]
+          
+          [Repetir estructura para cada día]
+          
+          Recomendaciones Generales:
+          - [Lista de consejos importantes]
+          - [Tips de preparación]
+          - [Alimentos a evitar]`
         },
         {
           role: "user",
-          content: `Genera un plan de dieta para ${tipoDieta} con duración de ${duracion}.`
+          content: `Genera un plan de alimentación detallado para ${tipoDieta} con duración de ${duracion}.`
         }
       ]
     }, {
@@ -205,11 +236,50 @@ app.post('/generate-nutrition', async (req, res) => {
       messages: [
         {
           role: "system",
-          content: "Eres un experto en nutrición deportiva. Proporciona planes de nutrición personalizados basados en los objetivos del usuario."
+          content: `Eres un experto en nutrición deportiva especializado en optimizar el rendimiento atlético.
+          
+          Instrucciones específicas:
+          - Crea un plan de nutrición deportiva para ${tipoNutricion}
+          - Enfócate en el objetivo: ${objetivoNutricion}
+          - Incluye timing específico de las comidas
+          - Especifica suplementos recomendados si son necesarios
+          - Añade consejos de hidratación
+          - Incluye recomendaciones pre y post entrenamiento
+          
+          Formato de respuesta requerido:
+          Plan de Nutrición Deportiva
+          Tipo: [Tipo de Plan]
+          Objetivo: [Objetivo Principal]
+          
+          1. Timing de Comidas:
+          Pre-entrenamiento (2-3 horas antes):
+          - [Lista de alimentos y cantidades]
+          - [Recomendaciones específicas]
+          
+          Durante el entrenamiento:
+          - [Hidratación y suplementos si son necesarios]
+          
+          Post-entrenamiento (30-60 minutos después):
+          - [Lista de alimentos y cantidades]
+          - [Recomendaciones específicas]
+          
+          2. Suplementación:
+          - [Lista de suplementos recomendados]
+          - [Dosis y timing]
+          - [Precauciones]
+          
+          3. Hidratación:
+          - [Plan detallado de hidratación]
+          - [Electrolitos si son necesarios]
+          
+          4. Recomendaciones Adicionales:
+          - [Consejos específicos]
+          - [Alimentos a evitar]
+          - [Tips de preparación]`
         },
         {
           role: "user",
-          content: `Genera un plan de nutrición deportiva para ${tipoNutricion} enfocado en ${objetivoNutricion}.`
+          content: `Genera un plan de nutrición deportiva detallado para ${tipoNutricion} enfocado en ${objetivoNutricion}.`
         }
       ]
     }, {
