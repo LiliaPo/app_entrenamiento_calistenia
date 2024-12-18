@@ -155,6 +155,7 @@ Distribución recomendada:
   }
 });
 
+// Endpoint para planes de dieta completos
 app.post('/generate-diet', async (req, res) => {
   try {
     const { tipoDieta, duracion } = req.body;
@@ -168,39 +169,34 @@ app.post('/generate-diet', async (req, res) => {
           
           Instrucciones específicas:
           - Crea un plan detallado para ${duracion}
-          - Incluye 5 comidas diarias: desayuno, media mañana, almuerzo, merienda y cena
-          - Especifica cantidades en gramos o porciones
+          - Incluye 5 comidas diarias con cantidades específicas
           - Adapta las comidas al objetivo: ${tipoDieta}
-          - Incluye alternativas para cada comida
-          - Añade consejos de preparación
+          - Mantén el formato consistente y legible
           
-          Formato de respuesta requerido:
-          Plan de Alimentación - [Objetivo]
-          Duración: [Duración]
-          
-          Día 1:
+          Formato requerido:
+          [Día]:
           Desayuno:
-          - Opción 1: [alimentos y cantidades]
-          - Opción 2: [alternativa]
-          Consejos: [preparación o tips]
+          - [alimentos y cantidades]
           
           Media Mañana:
-          [mismo formato]
+          - [alimentos y cantidades]
           
-          [Continuar con el resto de comidas]
+          Comida:
+          - [alimentos y cantidades]
           
-          [Repetir estructura para cada día]
+          Merienda:
+          - [alimentos y cantidades]
           
-          Recomendaciones Generales:
-          - [Lista de consejos importantes]
-          - [Tips de preparación]
-          - [Alimentos a evitar]`
+          Cena:
+          - [alimentos y cantidades]`
         },
         {
           role: "user",
           content: `Genera un plan de alimentación detallado para ${tipoDieta} con duración de ${duracion}.`
         }
-      ]
+      ],
+      temperature: 0.7,
+      max_tokens: 2000
     }, {
       headers: {
         'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
@@ -208,7 +204,15 @@ app.post('/generate-diet', async (req, res) => {
       }
     });
 
-    const dieta = response.data.choices[0].message.content;
+    let dieta = response.data.choices[0].message.content;
+    
+    // Formatear la respuesta para mejor legibilidad
+    dieta = dieta
+      .replace(/(Día \d+:|Lunes:|Martes:|Miércoles:|Jueves:|Viernes:|Sábado:|Domingo:)/g, '\n\n$1')
+      .replace(/(Desayuno:|Media mañana:|Comida:|Merienda:|Cena:)/g, '\n$1')
+      .replace(/(?<=:.*)\n(?!\n|$|Día|Lunes|Martes|Miércoles|Jueves|Viernes|Sábado|Domingo|Desayuno|Media|Comida|Merienda|Cena)/g, ' ')
+      .trim();
+
     res.json({ dieta });
   } catch (error) {
     console.error('Error al generar la dieta:', error);
@@ -227,61 +231,32 @@ app.post('/generate-diet', async (req, res) => {
   }
 });
 
+// Endpoint para información nutricional específica
 app.post('/generate-nutrition', async (req, res) => {
   try {
-    const { tipoNutricion, objetivoNutricion } = req.body;
+    const { consulta } = req.body;
     
     const response = await axios.post<GroqResponse>(GROQ_API_URL, {
       model: "mixtral-8x7b-32768",
       messages: [
         {
           role: "system",
-          content: `Eres un experto en nutrición deportiva especializado en optimizar el rendimiento atlético.
+          content: `Eres un experto en nutrición deportiva.
           
-          Instrucciones específicas:
-          - Crea un plan de nutrición deportiva para ${tipoNutricion}
-          - Enfócate en el objetivo: ${objetivoNutricion}
-          - Incluye timing específico de las comidas
-          - Especifica suplementos recomendados si son necesarios
-          - Añade consejos de hidratación
-          - Incluye recomendaciones pre y post entrenamiento
-          
-          Formato de respuesta requerido:
-          Plan de Nutrición Deportiva
-          Tipo: [Tipo de Plan]
-          Objetivo: [Objetivo Principal]
-          
-          1. Timing de Comidas:
-          Pre-entrenamiento (2-3 horas antes):
-          - [Lista de alimentos y cantidades]
-          - [Recomendaciones específicas]
-          
-          Durante el entrenamiento:
-          - [Hidratación y suplementos si son necesarios]
-          
-          Post-entrenamiento (30-60 minutos después):
-          - [Lista de alimentos y cantidades]
-          - [Recomendaciones específicas]
-          
-          2. Suplementación:
-          - [Lista de suplementos recomendados]
-          - [Dosis y timing]
-          - [Precauciones]
-          
-          3. Hidratación:
-          - [Plan detallado de hidratación]
-          - [Electrolitos si son necesarios]
-          
-          4. Recomendaciones Adicionales:
-          - [Consejos específicos]
-          - [Alimentos a evitar]
-          - [Tips de preparación]`
+          Instrucciones:
+          - Responde SOLO a la consulta específica del usuario
+          - NO generes planes de alimentación completos
+          - Proporciona información precisa y científicamente respaldada
+          - Incluye referencias cuando sea relevante
+          - Mantén las respuestas concisas y directas`
         },
         {
           role: "user",
-          content: `Genera un plan de nutrición deportiva detallado para ${tipoNutricion} enfocado en ${objetivoNutricion}.`
+          content: consulta
         }
-      ]
+      ],
+      temperature: 0.7,
+      max_tokens: 1000
     }, {
       headers: {
         'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
@@ -289,19 +264,19 @@ app.post('/generate-nutrition', async (req, res) => {
       }
     });
 
-    const nutricion = response.data.choices[0].message.content;
-    res.json({ nutricion });
+    const informacion = response.data.choices[0].message.content;
+    res.json({ informacion });
   } catch (error) {
-    console.error('Error al generar el plan de nutrición:', error);
+    console.error('Error al obtener información nutricional:', error);
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError;
       res.status(500).json({ 
-        error: 'Error al generar el plan de nutrición',
+        error: 'Error al obtener información nutricional',
         detalles: axiosError.response?.data || axiosError.message
       });
     } else {
       res.status(500).json({ 
-        error: 'Error al generar el plan de nutrición',
+        error: 'Error al obtener información nutricional',
         detalles: 'Error interno del servidor'
       });
     }
@@ -319,14 +294,23 @@ app.post('/api/chat', async (req, res) => {
           role: "system",
           content: isFirstMessage ? 
             "Responde exactamente: ¡Hola! ¿En qué puedo ayudarte?" :
-            `Eres un asistente nutricional experto que crea planes de alimentación detallados.
+            `Eres un asistente nutricional experto.
 
-Cuando crees un plan de alimentación:
-- Incluye 7 días completos
-- Para cada día especifica: desayuno, comida, merienda y cena
-- Incluye cantidades y porciones
-- Adapta el plan según las necesidades del usuario
-- Mantén el formato consistente`
+Reglas de respuesta:
+1. Si el usuario pide un plan de alimentación:
+   - Crea un plan detallado de 7 días
+   - Incluye todas las comidas
+   - Especifica cantidades
+
+2. Si el usuario pide información específica:
+   - Responde solo a lo preguntado
+   - No agregues planes de alimentación
+   - Mantén la respuesta concisa y relevante
+
+3. Si el usuario pide información sobre suplementos:
+   - Describe cada suplemento
+   - Explica sus beneficios
+   - Incluye precauciones necesarias`
         },
         {
           role: "user",
@@ -342,21 +326,17 @@ Cuando crees un plan de alimentación:
       }
     });
 
-    // Formatear la respuesta para mejor legibilidad
     let respuesta = response.data.choices[0].message.content;
     
-    // Eliminar texto introductorio si existe
-    respuesta = respuesta.replace(/^.*?(?=(?:Día|Lunes|Martes|Miércoles|Jueves|Viernes|Sábado|Domingo))/s, '').trim();
-    
-    // Formatear el texto
-    respuesta = respuesta
-      // Doble salto de línea antes de cada día
-      .replace(/(Día \d+:|Lunes:|Martes:|Miércoles:|Jueves:|Viernes:|Sábado:|Domingo:)/g, '\n\n$1')
-      // Salto de línea antes de cada comida
-      .replace(/(Desayuno:|Media mañana:|Comida:|Merienda:|Cena:)/g, '\n$1')
-      // Juntar líneas de la misma comida
-      .replace(/(?<=:.*)\n(?!\n|$|Día|Lunes|Martes|Miércoles|Jueves|Viernes|Sábado|Domingo|Desayuno|Media|Comida|Merienda|Cena)/g, ' ')
-      .trim();
+    // Solo aplicar formato si es un plan de alimentación
+    if (respuesta.includes('Día 1:') || respuesta.includes('Lunes:')) {
+      respuesta = respuesta
+        .replace(/^.*?(?=(?:Día|Lunes|Martes|Miércoles|Jueves|Viernes|Sábado|Domingo))/s, '')
+        .replace(/(Día \d+:|Lunes:|Martes:|Miércoles:|Jueves:|Viernes:|Sábado:|Domingo:)/g, '\n\n$1')
+        .replace(/(Desayuno:|Media mañana:|Comida:|Merienda:|Cena:)/g, '\n$1')
+        .replace(/(?<=:.*)\n(?!\n|$|Día|Lunes|Martes|Miércoles|Jueves|Viernes|Sábado|Domingo|Desayuno|Media|Comida|Merienda|Cena)/g, ' ')
+        .trim();
+    }
 
     res.json({ response: respuesta });
   } catch (error) {
