@@ -1554,8 +1554,8 @@ body.tipo-entrenamiento-page {
 /* Estilos para el botón flotante del asistente */
 .assistant-button {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    top: 130px;
+    right: calc(50% - 380px);
     width: 60px;
     height: 60px;
     background-color: #345845;
@@ -1582,8 +1582,8 @@ body.tipo-entrenamiento-page {
 /* Estilos para la ventana de chat emergente */
 .chat-popup {
     position: fixed;
-    bottom: 100px;
-    right: 30px;
+    top: 200px;
+    right: calc(50% - 380px);
     width: 350px;
     height: 500px;
     background-color: white;
@@ -1678,4 +1678,13 @@ body.tipo-entrenamiento-page {
     background-color: #e9ecef;
     color: #333;
     margin-right: auto;
+}
+
+@media (max-width: 1200px) {
+    .assistant-button {
+        right: 30px;
+    }
+    .chat-popup {
+        right: 30px;
+    }
 }
