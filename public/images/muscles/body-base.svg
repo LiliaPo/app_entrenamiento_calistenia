@@ -1,0 +1,46 @@
+<svg viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- Silueta del cuerpo -->
+    <path class="body-outline" d="M50,10 
+        <!-- Cabeza -->
+        a8,8 0 1,1 0,16
+        <!-- Cuello -->
+        c0,4 0,8 0,10
+        <!-- Hombros -->
+        c-12,0 -20,5 -20,10
+        <!-- Brazos -->
+        c-5,15 -5,30 0,40
+        <!-- Torso -->
+        M30,46 
+        c0,20 5,40 20,50
+        c15,-10 20,-30 20,-50
+        <!-- Piernas -->
+        M35,96
+        c-5,30 -5,60 5,90
+        M65,96
+        c5,30 5,60 -5,90"
+        fill="none" stroke="#2c3e50" stroke-width="2"/>
+
+    <!-- Grupos musculares (inicialmente ocultos) -->
+    <g class="muscles" fill="#98dfb6" opacity="0.5">
+        <!-- Hombros -->
+        <path class="shoulders" d="M25,36 a8,8 0 1,1 0,0 M75,36 a8,8 0 1,1 0,0" style="display:none"/>
+        
+        <!-- Pecho -->
+        <path class="chest" d="M35,46 c5,10 25,10 30,0" style="display:none"/>
+        
+        <!-- Brazos -->
+        <path class="arms" d="M25,46 c-5,15 -5,30 0,40 M75,46 c5,15 5,30 0,40" style="display:none"/>
+        
+        <!-- Core/Abs -->
+        <path class="core" d="M40,56 h20 v30 h-20 z" style="display:none"/>
+        
+        <!-- Espalda -->
+        <path class="back" d="M35,46 h30 v40 h-30 z" style="display:none"/>
+        
+        <!-- Piernas -->
+        <path class="legs" d="M35,96 c-5,30 -5,60 5,90 M65,96 c5,30 5,60 -5,90" style="display:none"/>
+        
+        <!-- Glúteos -->
+        <path class="glutes" d="M40,96 c10,10 10,10 20,0" style="display:none"/>
+    </g>
+</svg> 

@@ -902,6 +902,10 @@ body.tipo-entrenamiento-page {
     padding: 1.5rem;
     width: 300px;
     z-index: 1000;
+    max-height: 80vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #98dfb6 #f0f0f0;
 }
 
 .user-menu.active {
@@ -960,12 +964,17 @@ body.tipo-entrenamiento-page {
 }
 
 .avatar-option {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     cursor: pointer;
     border: 2px solid transparent;
     transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 .avatar-option:hover {
@@ -1032,7 +1041,7 @@ body.tipo-entrenamiento-page {
 }
 
 .save-profile-btn {
-    background-color: #3498db;
+    background-color: #85c7a3;
     color: white;
     border: none;
     padding: 0.8rem;
@@ -1044,7 +1053,7 @@ body.tipo-entrenamiento-page {
 }
 
 .save-profile-btn:hover {
-    background-color: #2980b9;
+    background-color: #345845;
 }
 
 @media (max-width: 480px) {
@@ -1059,4 +1068,185 @@ body.tipo-entrenamiento-page {
     .metric-field input {
         width: 100%;
     }
+}
+
+.day-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    padding: 0.5rem;
+    background-color: rgba(44, 62, 80, 0.1);
+    border-radius: 4px;
+}
+
+.muscle-icon {
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.muscle-legs {
+    background-image: url('/images/muscles/legs.svg');
+}
+
+.muscle-glutes {
+    background-image: url('/images/muscles/glutes.svg');
+}
+
+.muscle-core {
+    background-image: url('/images/muscles/core.svg');
+}
+
+.muscle-chest {
+    background-image: url('/images/muscles/chest.svg');
+}
+
+.muscle-back {
+    background-image: url('/images/muscles/back.svg');
+}
+
+.muscle-arms {
+    background-image: url('/images/muscles/arms.svg');
+}
+
+.muscle-shoulders {
+    background-image: url('/images/muscles/shoulders.svg');
+}
+
+.muscle-upper {
+    background-image: url('/images/muscles/upper-body.svg');
+}
+
+.muscle-cardio {
+    background-image: url('/images/muscles/cardio.svg');
+}
+
+.muscle-full {
+    background-image: url('/images/muscles/full-body.svg');
+}
+
+.muscle-default {
+    background-image: url('/images/muscles/default.svg');
+}
+
+/* Estilo para el scrollbar en navegadores webkit (Chrome, Safari, etc) */
+.user-menu::-webkit-scrollbar {
+    width: 8px;
+}
+
+.user-menu::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 4px;
+}
+
+.user-menu::-webkit-scrollbar-thumb {
+    background-color: #98dfb6;
+    border-radius: 4px;
+    border: 2px solid #f0f0f0;
+}
+
+.user-menu::-webkit-scrollbar-thumb:hover {
+    background-color: #7bc8a4;
+}
+
+.exercise-row {
+    margin: 10px 0;
+    padding: 12px 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    line-height: 1.4;
+    color: #2c3e50;
+}
+
+.exercise-row:hover {
+    transform: translateX(5px);
+    background-color: rgba(255, 255, 255, 0.95);
+}
+
+/* Estilos para la rutina */
+.routine-header {
+    background-color: rgba(44, 62, 80, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+}
+
+.routine-header h2 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.routine-info {
+    color: #34495e;
+    margin: 0.5rem 0 0;
+    font-size: 0.9em;
+}
+
+.day-title {
+    color: #2c3e50;
+    font-size: 1.2em;
+    margin: 1.5rem 0 1rem;
+    padding: 0.8rem;
+    background-color: rgba(44, 62, 80, 0.1);
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.routine-note {
+    margin: 0.5rem 0;
+    padding: 0.8rem;
+    color: #666;
+    font-style: italic;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    line-height: 1.4;
+}
+
+/* Indicador de carga */
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #2c3e50;
+    font-size: 1.1em;
+}
+
+.loading:after {
+    content: '...';
+    animation: dots 1.5s steps(5, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60% { content: '...'; }
+    80%, 100% { content: ''; }
+}
+
+/* Mensaje de error */
+.error-message {
+    background-color: rgba(231, 76, 60, 0.1);
+    border-left: 4px solid #e74c3c;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 4px;
+}
+
+.error-message p {
+    margin: 0.5rem 0;
+    color: #c0392b;
+}
+
+.error-details {
+    font-size: 0.9em;
+    color: #7f8c8d;
+    margin-top: 0.5rem;
 }

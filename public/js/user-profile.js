@@ -7,7 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cargar datos del usuario si existen
     const userData = JSON.parse(localStorage.getItem('userData') || '{}');
     if (userData.avatar) {
-        userAvatar.src = `/images/${userData.avatar}.png`;
+        userAvatar.innerHTML = userData.avatar;
+        userAvatar.style.display = 'flex';
+        userAvatar.style.alignItems = 'center';
+        userAvatar.style.justifyContent = 'center';
+        userAvatar.style.fontSize = '1.8em';
     }
 
     // Mostrar/ocultar menú de usuario
@@ -30,7 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
         option.addEventListener('click', () => {
             avatarOptions.forEach(opt => opt.classList.remove('selected'));
             option.classList.add('selected');
-            userAvatar.src = option.src;
+            userAvatar.innerHTML = option.dataset.avatar;
+            userAvatar.style.display = 'flex';
+            userAvatar.style.alignItems = 'center';
+            userAvatar.style.justifyContent = 'center';
+            userAvatar.style.fontSize = '1.8em';
         });
     });
 

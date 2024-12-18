@@ -15,7 +15,7 @@
             <a href="/dietas.html" class="nav-link">Dieta</a>
             <a href="/nutricion.html" class="nav-link">Nutrición Deportiva</a>
             <div class="user-profile">
-                <img src="/images/default-avatar.png" alt="Mi Perfil" class="avatar" id="userAvatar" title="Mi Perfil">
+                <div class="avatar" id="userAvatar" title="Mi Perfil">👤 Mi Perfil</div>
                 <div class="user-menu" id="userMenu">
                     <div class="menu-header">
                         <h3>Mi Perfil</h3>
@@ -37,10 +37,14 @@
                         <div class="form-field">
                             <label>Avatar</label>
                             <div class="avatar-selection">
-                                <img src="/images/avatar1.png" class="avatar-option" data-avatar="avatar1">
-                                <img src="/images/avatar2.png" class="avatar-option" data-avatar="avatar2">
-                                <img src="/images/avatar3.png" class="avatar-option" data-avatar="avatar3">
-                                <img src="/images/avatar4.png" class="avatar-option" data-avatar="avatar4">
+                                <div class="avatar-option" data-avatar="👤">👤</div>
+                                <div class="avatar-option" data-avatar="👨">👨</div>
+                                <div class="avatar-option" data-avatar="👩">👩</div>
+                                <div class="avatar-option" data-avatar="🧑">🧑</div>
+                                <div class="avatar-option" data-avatar="👱‍♀️">👱‍♀️</div>
+                                <div class="avatar-option" data-avatar="👱">👱</div>
+                                <div class="avatar-option" data-avatar="🧔">🧔</div>
+                                <div class="avatar-option" data-avatar="👧">👧</div>
                             </div>
                         </div>
                         <div class="metrics-section">
@@ -126,15 +130,10 @@
             </div>
         </div>
     </div>
-    <script src="/js/script.js"></script>
     <script src="/js/calendar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/js/progress-tracker.js"></script>
     <script src="/js/user-profile.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const calendar = new Calendar(document.getElementById('calendar'));
-        });
-    </script>
+    <script type="module" src="/js/script.js"></script>
 </body>
 </html>
