@@ -29,10 +29,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 .replace(/(?:Desayuno|Almuerzo|Cena|Merienda):/g, '\n$&\n')
                 .trim();
 
+            // Guardar la dieta en localStorage
+            const dietasGuardadas = JSON.parse(localStorage.getItem('dietas') || '[]');
+            dietasGuardadas.push({
+                tipo: tipoDieta,
+                duracion: duracion,
+                contenido: dietaFormateada,
+                fecha: new Date().toISOString()
+            });
+            localStorage.setItem('dietas', JSON.stringify(dietasGuardadas));
+
             dietaResultado.innerHTML = `
                 <h2>Tu plan de dieta para ${tipoDieta} - ${duracion}:</h2>
                 <div class="bloque">
                     ${dietaFormateada}
+                </div>
+                <div class="dieta-actions">
+                    <p class="success-message">¡Dieta guardada! Puedes verla en <a href="/mis-dietas.html">Mis Dietas</a></p>
                 </div>
             `;
         } catch (error) {

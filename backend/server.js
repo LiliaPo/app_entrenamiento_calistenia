@@ -24,8 +24,64 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
+
+// Middleware de logging
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    next();
+});
+
+// Ruta específica para mis-dietas.html
+app.get('/mis-dietas.html', (req, res) => {
+    console.log('Accediendo a mis-dietas.html');
+    res.sendFile(path.join(__dirname, '../frontend/public/mis-dietas.html'));
+});
+
+// Resto de rutas estáticas
+app.use('/css', express.static(path.join(__dirname, '../frontend/public/css')));
+app.use('/js', express.static(path.join(__dirname, '../frontend/public/js')));
+app.use('/images', express.static(path.join(__dirname, '../frontend/public/images')));
+app.use('/components', express.static(path.join(__dirname, '../frontend/components')));
+
+// El resto de los archivos estáticos
 app.use(express.static(path.join(__dirname, '../frontend/public')));
-app.use('/frontend/components', express.static(path.join(__dirname, '../frontend/components')));
+
+// Rutas HTML específicas
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/index.html'));
+});
+
+app.get('/asistente.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/asistente.html'));
+});
+
+app.get('/dietas.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/dietas.html'));
+});
+
+app.get('/entrenamientos.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/entrenamientos.html'));
+});
+
+app.get('/mensajes.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/mensajes.html'));
+});
+
+app.get('/progress.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/progress.html'));
+});
+
+app.get('/nutricion.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/nutricion.html'));
+});
+
+app.get('/login.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/login.html'));
+});
+
+app.get('/register.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/register.html'));
+});
 
 // Configuración de OpenAI
 const configuration = new Configuration({
@@ -33,7 +89,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-// Rutas
+// Rutas API
 const authRouter = require('./routes/auth');
 const messagesRouter = require('./routes/messages');
 
@@ -72,7 +128,7 @@ app.post('/api/chat', async (req, res) => {
 
         res.json({
             respuesta: completion.data.choices[0].message.content,
-            rutina: null // Por ahora, la rutina se procesará más adelante
+            rutina: null
         });
 
     } catch (error) {
@@ -94,7 +150,3 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });
-
-app.get('/mensajes.html', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public/mensajes.html'));
-}); 
