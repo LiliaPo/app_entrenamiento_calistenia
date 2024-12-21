@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrenamientos - Calistenia para Mujeres</title>
+    <title>Mis Entrenamientos</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
+<body class="main-page">
     <div class="app-title">
-        <h1>Calistenia para Mujeres</h1>
+        <h1>Mis Entrenamientos</h1>
         <nav class="nav-buttons">
             <a href="/asistente.html" class="nav-link">Panel de Control</a>
             <a href="/entrenamientos.html" class="nav-link active">Entrenamientos</a>
@@ -16,45 +17,46 @@
             <a href="/nutricion.html" class="nav-link">Nutrición Deportiva</a>
         </nav>
     </div>
-    <div class="entrenamientos-grid">
-        <div class="entrenamiento-card" data-tipo="perdida-peso">
-            <h3>Pérdida de Peso</h3>
-            <p>Rutinas específicas para perder peso de forma saludable</p>
-        </div>
-        <div class="entrenamiento-card" data-tipo="cuerpo-esculpido">
-            <h3>Cuerpo Esculpido</h3>
-            <p>Define y tonifica tu cuerpo</p>
-        </div>
-        <div class="entrenamiento-card" data-tipo="gluteos">
-            <h3>Glúteos Perfectos</h3>
-            <p>Ejercicios específicos para glúteos</p>
-        </div>
-        <div class="entrenamiento-card" data-tipo="abdominales">
-            <h3>Abdominales 6 Pack</h3>
-            <p>Rutinas para un core fuerte y definido</p>
-        </div>
-        <div class="entrenamiento-card" data-tipo="aumento-muscular">
-            <h3>Aumento Muscular General</h3>
-            <p>Gana masa muscular y fuerza</p>
-        </div>
-        <div class="entrenamiento-card" data-tipo="pesas">
-            <h3>Levantamiento de Pesas</h3>
-            <p>Rutinas con pesas para principiantes y avanzadas</p>
-        </div>
-        <div class="entrenamiento-card" data-tipo="crossfit">
-            <h3>Cross-Fit</h3>
-            <p>Entrenamiento funcional de alta intensidad</p>
-        </div>
-        <div class="entrenamiento-card" data-tipo="completo">
-            <h3>Cuerpo Completo en 45 Minutos</h3>
-            <p>Rutinas eficientes para todo el cuerpo</p>
-        </div>
-        <div class="entrenamiento-card" data-tipo="posparto">
-            <h3>Recuperación Posparto</h3>
-            <p>Ejercicios seguros para después del embarazo</p>
+
+    <div class="container">
+        <div class="workouts-container">
+            <div class="active-workout">
+                <h2>Entrenamiento Actual</h2>
+                <div id="current-workout" class="workout-plan">
+                    <!-- Aquí se mostrará el entrenamiento actual -->
+                </div>
+            </div>
+
+            <div class="completed-workouts">
+                <h2>Entrenamientos Completados</h2>
+                <div id="completed-workouts" class="workout-history">
+                    <!-- Aquí se mostrarán los entrenamientos completados -->
+                </div>
+            </div>
         </div>
     </div>
-    <script src="/components/script.js"></script>
-    <script src="/components/entrenamientos.js"></script>
+
+    <nav class="footer-nav">
+        <div class="footer-menu">
+            <a href="/entrenamientos.html" class="footer-item active">
+                <i class="fas fa-dumbbell"></i>
+                Mis entrenos
+            </a>
+            <a href="/dietas.html" class="footer-item">
+                <i class="fas fa-utensils"></i>
+                Mis dietas
+            </a>
+            <a href="/asistente.html" class="footer-item">
+                <i class="fas fa-comments"></i>
+                Mensajes
+            </a>
+            <a href="/progress.html" class="footer-item">
+                <i class="fas fa-chart-line"></i>
+                Mis progresos
+            </a>
+        </div>
+    </nav>
+
+    <script src="/components/workouts.js"></script>
 </body>
 </html> 

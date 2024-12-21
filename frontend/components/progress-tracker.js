@@ -103,11 +103,12 @@ function saveProgress() {
         return;
     }
     
-    const date = new Date().toLocaleDateString('es');
+    const date = new Date();
+    const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
     
     // Guardar en localStorage
     let savedData = JSON.parse(localStorage.getItem('progressData') || '[]');
-    savedData.push({ date, weight, height });
+    savedData.push({ date: formattedDate, weight, height });
     localStorage.setItem('progressData', JSON.stringify(savedData));
     
     // Actualizar gráfica

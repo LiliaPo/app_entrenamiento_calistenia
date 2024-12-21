@@ -234,29 +234,61 @@ app.post('/generate-diet', async (req, res) => {
 // Endpoint para información nutricional específica
 app.post('/generate-nutrition', async (req, res) => {
   try {
-    const { consulta } = req.body;
+    const { tipoNutricion, objetivoNutricion } = req.body;
     
     const response = await axios.post<GroqResponse>(GROQ_API_URL, {
       model: "mixtral-8x7b-32768",
       messages: [
         {
           role: "system",
-          content: `Eres un experto en nutrición deportiva.
+          content: `Eres un experto en nutrición deportiva especializado en optimizar el rendimiento atlético.
           
-          Instrucciones:
-          - Responde SOLO a la consulta específica del usuario
-          - NO generes planes de alimentación completos
-          - Proporciona información precisa y científicamente respaldada
-          - Incluye referencias cuando sea relevante
-          - Mantén las respuestas concisas y directas`
+          Instrucciones específicas:
+          - Crea un plan de nutrición deportiva para ${tipoNutricion}
+          - Enfócate en el objetivo: ${objetivoNutricion}
+          - Incluye timing específico de las comidas
+          - Especifica suplementos recomendados si son necesarios
+          - Añade consejos de hidratación
+          - Incluye recomendaciones pre y post entrenamiento
+          
+          Formato de respuesta requerido:
+          Plan de Nutrición Deportiva
+          Tipo: [Tipo de Plan]
+          Objetivo: [Objetivo Principal]
+          
+          1. Timing de Comidas:
+          Pre-entrenamiento (2-3 horas antes):
+          - [Lista de alimentos y cantidades]
+          - [Recomendaciones específicas]
+          
+          Durante el entrenamiento:
+          - [Hidratación y suplementos si son necesarios]
+          
+          Post-entrenamiento (30-60 minutos después):
+          - [Lista de alimentos y cantidades]
+          - [Recomendaciones específicas]
+          
+          2. Suplementación:
+          - [Lista de suplementos recomendados]
+          - [Dosis y timing]
+          - [Precauciones]
+          
+          3. Hidratación:
+          - [Plan detallado de hidratación]
+          - [Electrolitos si son necesarios]
+          
+          4. Recomendaciones Adicionales:
+          - [Consejos específicos]
+          - [Alimentos a evitar]
+          - [Tips de preparación]`
         },
         {
           role: "user",
-          content: consulta
+          content: `Genera un plan de nutrición deportiva detallado para ${tipoNutricion} enfocado en ${objetivoNutricion}.`
         }
       ],
       temperature: 0.7,
-      max_tokens: 1000
+      max_tokens: 2000
     }, {
       headers: {
         'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
@@ -264,19 +296,27 @@ app.post('/generate-nutrition', async (req, res) => {
       }
     });
 
-    const informacion = response.data.choices[0].message.content;
-    res.json({ informacion });
+    const nutricion = response.data.choices[0].message.content;
+    
+    // Formatear la respuesta para mejor legibilidad
+    const nutricionFormateada = nutricion
+      .replace(/\d+\./g, '\n$&')  // Añadir salto de línea antes de cada sección numerada
+      .replace(/(?:Pre|Durante|Post)-entrenamiento/g, '\n$&')  // Salto de línea antes de cada timing
+      .replace(/^- /gm, '\n- ')  // Salto de línea antes de cada elemento de lista
+      .trim();
+
+    res.json({ nutricion: nutricionFormateada });
   } catch (error) {
-    console.error('Error al obtener información nutricional:', error);
+    console.error('Error al generar el plan de nutrición:', error);
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError;
       res.status(500).json({ 
-        error: 'Error al obtener información nutricional',
+        error: 'Error al generar el plan de nutrición',
         detalles: axiosError.response?.data || axiosError.message
       });
     } else {
       res.status(500).json({ 
-        error: 'Error al obtener información nutricional',
+        error: 'Error al generar el plan de nutrición',
         detalles: 'Error interno del servidor'
       });
     }

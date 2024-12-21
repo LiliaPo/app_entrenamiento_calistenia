@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensajes de la Comunidad</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="main-page">
+    <div class="app-title">
+        <h1>Mensajes de la Comunidad</h1>
+        <nav class="nav-buttons">
+            <a href="/asistente.html" class="nav-link">Panel de Control</a>
+            <a href="/entrenamientos.html" class="nav-link">Entrenamientos</a>
+            <a href="/dietas.html" class="nav-link">Dieta</a>
+            <a href="/nutricion.html" class="nav-link">Nutrición Deportiva</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <!-- Formulario para crear nuevo mensaje -->
+        <div class="new-post-form">
+            <textarea id="messageText" placeholder="¿Qué logros quieres compartir con la comunidad?"></textarea>
+            <div class="post-actions">
+                <label for="imageUpload" class="upload-btn">
+                    <i class="fas fa-image"></i>
+                    Añadir foto
+                </label>
+                <input type="file" id="imageUpload" accept="image/*" multiple style="display: none;">
+                <button id="postMessage" class="post-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    Publicar
+                </button>
+            </div>
+            <div id="imagePreview" class="image-preview"></div>
+        </div>
+
+        <!-- Feed de mensajes -->
+        <div id="messageFeed" class="message-feed">
+            <!-- Template para los mensajes -->
+            <template id="message-template">
+                <div class="message-card">
+                    <div class="message-header">
+                        <img class="user-avatar" src="" alt="Avatar">
+                        <div class="user-info">
+                            <h3 class="username"></h3>
+                            <span class="timestamp"></span>
+                        </div>
+                    </div>
+                    <div class="message-content">
+                        <p class="message-text"></p>
+                        <div class="message-images"></div>
+                    </div>
+                    <div class="message-actions">
+                        <div class="reactions">
+                            <button class="reaction-btn" data-reaction="like">
+                                <i class="fas fa-thumbs-up"></i>
+                                <span class="reaction-count">0</span>
+                            </button>
+                            <button class="reaction-btn" data-reaction="heart">
+                                <i class="fas fa-heart"></i>
+                                <span class="reaction-count">0</span>
+                            </button>
+                            <button class="reaction-btn" data-reaction="clap">
+                                <i class="fas fa-hands-clapping"></i>
+                                <span class="reaction-count">0</span>
+                            </button>
+                        </div>
+                        <button class="dm-btn">
+                            <i class="fas fa-envelope"></i>
+                            Mensaje directo
+                        </button>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <!-- Modal para mensajes directos -->
+    <div id="dmModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Enviar mensaje a <span id="recipientName"></span></h2>
+            <textarea id="dmText" placeholder="Escribe tu mensaje..."></textarea>
+            <button id="sendDM" class="post-btn">Enviar</button>
+        </div>
+    </div>
+
+    <nav class="footer-nav">
+        <div class="footer-menu">
+            <a href="/entrenamientos.html" class="footer-item">
+                <i class="fas fa-dumbbell"></i>
+                Mis entrenos
+            </a>
+            <a href="/dietas.html" class="footer-item">
+                <i class="fas fa-utensils"></i>
+                Mis dietas
+            </a>
+            <a href="/mensajes.html" class="footer-item active">
+                <i class="fas fa-comments"></i>
+                Mensajes
+            </a>
+            <a href="/progress.html" class="footer-item">
+                <i class="fas fa-chart-line"></i>
+                Mis progresos
+            </a>
+        </div>
+    </nav>
+
+    <script src="/components/mensajes.js"></script>
+</body>
+</html> 

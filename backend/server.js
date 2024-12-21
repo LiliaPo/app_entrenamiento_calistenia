@@ -1,22 +1,44 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 const { Configuration, OpenAIApi } = require('openai');
 require('dotenv').config();
 
 const app = express();
 const port = 3000;
 
+// Conexión a MongoDB
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/fitness_app', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log('Conectado a MongoDB'))
+.catch(err => console.error('Error conectando a MongoDB:', err));
+
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../frontend/public')));
+app.use('/frontend/components', express.static(path.join(__dirname, '../frontend/components')));
 
 // Configuración de OpenAI
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY
 });
 const openai = new OpenAIApi(configuration);
+
+// Rutas
+const authRouter = require('./routes/auth');
+const messagesRouter = require('./routes/messages');
+
+app.use('/api/auth', authRouter);
+app.use('/api/messages', messagesRouter);
 
 // Endpoint para el chat
 app.post('/api/chat', async (req, res) => {
@@ -62,7 +84,17 @@ app.post('/api/chat', async (req, res) => {
     }
 });
 
+// Manejo de errores
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ message: 'Algo salió mal!' });
+});
+
 // Iniciar servidor
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
+});
+
+app.get('/mensajes.html', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/public/mensajes.html'));
 }); 

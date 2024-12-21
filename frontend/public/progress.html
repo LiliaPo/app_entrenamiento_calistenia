@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Progresos</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="main-page">
+    <div class="app-title">
+        <h1>Mis Progresos</h1>
+        <nav class="nav-buttons">
+            <a href="/asistente.html" class="nav-link">Panel de Control</a>
+            <a href="/entrenamientos.html" class="nav-link">Entrenamientos</a>
+            <a href="/dietas.html" class="nav-link">Dieta</a>
+            <a href="/nutricion.html" class="nav-link">Nutrición Deportiva</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class="progress-sections">
+            <!-- Sección de Peso y Medidas -->
+            <div class="progress-section">
+                <h2>Peso y Medidas</h2>
+                <div class="chart-container">
+                    <canvas id="weightChart"></canvas>
+                </div>
+                <div class="imc-container">
+                    <h4>Índice de Masa Corporal (IMC)</h4>
+                    <div class="imc-gauge">
+                        <div class="imc-ranges">
+                            <span class="range bajo-peso">Bajo</span>
+                            <span class="range normal">Normal</span>
+                            <span class="range sobrepeso">Sobrepeso</span>
+                            <span class="range obesidad">Obesidad</span>
+                        </div>
+                        <div class="imc-marker" id="imcMarker">
+                            <div class="marker-value">--</div>
+                            <div class="marker-arrow">▼</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de Entrenamientos -->
+            <div class="progress-section">
+                <h2>Progreso de Entrenamientos</h2>
+                <div class="chart-container">
+                    <canvas id="workoutsChart"></canvas>
+                </div>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <i class="fas fa-dumbbell"></i>
+                        <span class="stat-value" id="totalWorkouts">0</span>
+                        <span class="stat-label">Entrenamientos Completados</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-fire"></i>
+                        <span class="stat-value" id="totalExercises">0</span>
+                        <span class="stat-label">Ejercicios Realizados</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de Dietas -->
+            <div class="progress-section">
+                <h2>Seguimiento de Dieta</h2>
+                <div class="chart-container">
+                    <canvas id="dietChart"></canvas>
+                </div>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <i class="fas fa-apple-alt"></i>
+                        <span class="stat-value" id="dietStreak">0</span>
+                        <span class="stat-label">Días Consecutivos</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span class="stat-value" id="dietCompletion">0%</span>
+                        <span class="stat-label">Cumplimiento</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="footer-nav">
+        <div class="footer-menu">
+            <a href="/entrenamientos.html" class="footer-item">
+                <i class="fas fa-dumbbell"></i>
+                Mis entrenos
+            </a>
+            <a href="/dietas.html" class="footer-item">
+                <i class="fas fa-utensils"></i>
+                Mis dietas
+            </a>
+            <a href="/asistente.html" class="footer-item">
+                <i class="fas fa-comments"></i>
+                Mensajes
+            </a>
+            <a href="/progress.html" class="footer-item active">
+                <i class="fas fa-chart-line"></i>
+                Mis progresos
+            </a>
+        </div>
+    </nav>
+
+    <script src="/components/progress.js"></script>
+</body>
+</html> 
