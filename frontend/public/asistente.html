@@ -8,6 +8,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="main-page">
+    <nav class="footer-nav">
+        <div class="footer-menu">
+            <a href="/entrenamientos.html" class="footer-item">
+                <i class="fas fa-dumbbell"></i>
+                Mis entrenos
+            </a>
+            <a href="/mis-dietas.html" class="footer-item">
+                <i class="fas fa-utensils"></i>
+                Mis dietas
+            </a>
+            <a href="/mensajes.html" class="footer-item">
+                <i class="fas fa-comments"></i>
+                Mensajes
+            </a>
+            <a href="/progress.html" class="footer-item">
+                <i class="fas fa-chart-line"></i>
+                Mis progresos
+            </a>
+        </div>
+    </nav>
     <div class="app-title">
         <h1>Calistenia para Mujeres</h1>
         <nav class="nav-buttons">
@@ -19,7 +39,7 @@
                 <div class="user-menu" id="userMenu">
                     <div class="menu-header">
                         <h3>Mi Perfil</h3>
-                        <button class="settings-btn">���️</button>
+                        <button class="settings-btn">️</button>
                     </div>
                     <form id="userProfileForm" class="profile-form">
                         <div class="form-field">
@@ -130,33 +150,11 @@
             </div>
         </div>
     </div>
-    <script src="/js/navigation.js"></script>
+    
     <script src="/components/calendar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/components/progress-tracker.js"></script>
     <script src="/components/user-profile.js"></script>
     <script src="/components/script.js"></script>
-    <nav class="footer-nav">
-        <div class="footer-menu">
-            <a href="/entrenamientos.html" class="footer-item">
-                <i class="fas fa-dumbbell"></i>
-                Mis entrenos
-            </a>
-            <form action="/mis-dietas.html" method="get" style="display: inline;">
-                <button type="submit" class="footer-item" style="background: none; border: none; cursor: pointer; padding: 0;">
-                    <i class="fas fa-utensils"></i>
-                    Mis dietas
-                </button>
-            </form>
-            <a href="/mensajes.html" class="footer-item">
-                <i class="fas fa-comments"></i>
-                Mensajes
-            </a>
-            <a href="/progress.html" class="footer-item">
-                <i class="fas fa-chart-line"></i>
-                Mis progresos
-            </a>
-        </div>
-    </nav>
 </body>
 </html>

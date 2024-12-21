@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/fitness_a
 .then(() => console.log('Conectado a MongoDB'))
 .catch(err => console.error('Error conectando a MongoDB:', err));
 
-// Middleware
+// Middleware básico
 app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
@@ -31,57 +31,37 @@ app.use((req, res, next) => {
     next();
 });
 
-// Ruta específica para mis-dietas.html
-app.get('/mis-dietas.html', (req, res) => {
-    console.log('Accediendo a mis-dietas.html');
-    res.sendFile(path.join(__dirname, '../frontend/public/mis-dietas.html'));
+// Rutas HTML específicas - TIENEN PRIORIDAD ABSOLUTA
+const htmlRoutes = {
+    '/mensajes.html': 'mensajes.html',
+    '/mis-dietas.html': 'mis-dietas.html',
+    '/asistente.html': 'asistente.html',
+    '/dietas.html': 'dietas.html',
+    '/entrenamientos.html': 'entrenamientos.html',
+    '/progress.html': 'progress.html',
+    '/nutricion.html': 'nutricion.html'
+};
+
+// Manejar rutas HTML antes que cualquier otro middleware
+Object.entries(htmlRoutes).forEach(([route, file]) => {
+    app.get(route, (req, res) => {
+        console.log(`Sirviendo ${file}`);
+        res.sendFile(path.join(__dirname, '../frontend/public', file));
+    });
 });
 
-// Resto de rutas estáticas
+// Archivos estáticos después
 app.use('/css', express.static(path.join(__dirname, '../frontend/public/css')));
 app.use('/js', express.static(path.join(__dirname, '../frontend/public/js')));
 app.use('/images', express.static(path.join(__dirname, '../frontend/public/images')));
 app.use('/components', express.static(path.join(__dirname, '../frontend/components')));
 
-// El resto de los archivos estáticos
+// Rutas API
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/messages', require('./routes/messages'));
+
+// Resto de archivos estáticos
 app.use(express.static(path.join(__dirname, '../frontend/public')));
-
-// Rutas HTML específicas
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public/index.html'));
-});
-
-app.get('/asistente.html', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public/asistente.html'));
-});
-
-app.get('/dietas.html', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public/dietas.html'));
-});
-
-app.get('/entrenamientos.html', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public/entrenamientos.html'));
-});
-
-app.get('/mensajes.html', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public/mensajes.html'));
-});
-
-app.get('/progress.html', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public/progress.html'));
-});
-
-app.get('/nutricion.html', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public/nutricion.html'));
-});
-
-app.get('/login.html', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public/login.html'));
-});
-
-app.get('/register.html', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public/register.html'));
-});
 
 // Configuración de OpenAI
 const configuration = new Configuration({
@@ -89,33 +69,11 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-// Rutas API
-const authRouter = require('./routes/auth');
-const messagesRouter = require('./routes/messages');
-
-app.use('/api/auth', authRouter);
-app.use('/api/messages', messagesRouter);
-
 // Endpoint para el chat
 app.post('/api/chat', async (req, res) => {
     try {
         const { mensaje, tipo, lugar } = req.body;
-
-        const prompt = `Actúa como un entrenador personal profesional. Estás ayudando a crear una rutina de ${tipo} para realizar en ${lugar}. 
-        El usuario dice: "${mensaje}"
-        
-        Responde de manera amigable y profesional, haciendo preguntas relevantes si necesitas más información.
-        Si el usuario ha proporcionado suficiente información, genera una rutina detallada y personalizada.
-        
-        Formato de respuesta:
-        - Mantén un tono amigable y motivador
-        - Si necesitas más información, haz preguntas específicas
-        - Si generas una rutina, incluye:
-          * Días de entrenamiento recomendados
-          * Ejercicios específicos con series y repeticiones
-          * Consejos de forma y técnica
-          * Recomendaciones de descanso y recuperación`;
-
+        const prompt = `Actúa como un entrenador personal profesional...`;
         const completion = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
             messages: [
@@ -130,7 +88,6 @@ app.post('/api/chat', async (req, res) => {
             respuesta: completion.data.choices[0].message.content,
             rutina: null
         });
-
     } catch (error) {
         console.error('Error en el chat:', error);
         res.status(500).json({

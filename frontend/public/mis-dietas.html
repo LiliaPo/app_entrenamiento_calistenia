@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="main-page">
+    <script src="/js/footer-navigation.js"></script>
     <div class="app-title">
         <h1>Mis Dietas</h1>
         <nav class="nav-buttons">
@@ -19,11 +20,41 @@
     </div>
 
     <div class="container">
+        <!-- Sección de Dieta Activa -->
+        <div class="active-plan-container">
+            <h2>Dieta Actual</h2>
+            <div id="dieta-activa">
+                <p class="no-active-plan">No tienes ninguna dieta activa.</p>
+                <a href="/dietas.html" class="create-plan-btn">
+                    Crear Nueva Dieta
+                </a>
+            </div>
+        </div>
+
+        <!-- Sección de Nutrición Activa -->
+        <div class="active-plan-container">
+            <h2>Plan de Nutrición Actual</h2>
+            <div id="nutricion-activa">
+                <p class="no-active-plan">No tienes ningún plan de nutrición activo.</p>
+                <a href="/nutricion.html" class="create-plan-btn">
+                    Crear Plan de Nutrición
+                </a>
+            </div>
+        </div>
+
+        <!-- Historial de Dietas -->
         <div id="dietas-container">
-            <h2>Dietas Recomendadas</h2>
+            <h2>Historial de Dietas</h2>
             <div id="dietas-list"></div>
         </div>
 
+        <!-- Historial de Planes de Nutrición -->
+        <div id="nutricion-container">
+            <h2>Historial de Planes de Nutrición</h2>
+            <div id="nutricion-list"></div>
+        </div>
+
+        <!-- Gráfico de Evolución -->
         <div id="grafico-evolucion">
             <h2>Seguimiento de Peso</h2>
             <div class="grafico-container">
